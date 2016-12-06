@@ -9,11 +9,11 @@
     "jokes"
   ],
   "dependencies": {
-    "async": "^1.4.1",
+    "async": "^2.1.4",
     "progress": "^1.1.8",
-    "request": "^2.60.0",
-    "slackbots": "^0.3.0",
-    "sqlite3": "^3.0.10"
+    "request": "^2.79.0",
+    "slackbots": "^0.5.3",
+    "sqlite3": "^3.1.8"
   },
   "devDependencies": {
     "xo": "^0.5.2"
