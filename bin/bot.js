@@ -2,23 +2,39 @@
 
 'use strict';
 
-/**
- * Grandpabot launcher script.
- *
- */
-
-var GrandpaBot = require('../lib/grandpabot');
+// @ vendors
 var Botkit = require('botkit');
+// @ commons
+var GrandpaBot = require('../lib/grandpabot');
+
+// Initialise
+var grandpabot = new GrandpaBot();
+grandpabot.run();
 
 var controller = Botkit.slackbot({
     debug: false
-    //include "log: false" to disable logging
-    //or a "logLevel" integer from 0 to 7 to adjust logging verbosity
 });
 
 controller.spawn({
-        token: process.env.BOT_API_KEY || require('../token')
+    token: process.env.BOT_API_KEY || require('../token')
 }).startRTM();
 
-var grandpabot = new GrandpaBot(controller);
-grandpabot.run();
+controller.hears(['jajaja','Contate uno','Iluminame'],
+    ['direct_mention', 'mention'],
+    function(bot, message) {
+        grandpabot.replyWithRandomJoke(callback);
+
+        function callback(response) {
+            bot.reply(message, response);
+        }
+    });
+
+controller.hears(['grandpabot', 'grandpa', 'kk', 'jovie', 'viejo'],
+    ['ambient'],
+    function(bot, message) {
+        var userID = message.user;
+        var user = "<@"+userID+">";
+        var reply = user + " qué pasó? Ahora no puedo, ando en calls.";
+
+        bot.reply(message, reply);
+    });
