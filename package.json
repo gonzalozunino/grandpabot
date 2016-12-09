@@ -1,25 +1,29 @@
 {
   "name": "grandpabot",
-  "version": "1.0.1",
-  "description": "a simple Slack bot",
-  "main": "lib/grandpabot.js",
+  "version": "1.0.2",
+  "description": "A simple Slack bot",
   "bin": {
     "grandpabot": "bin/bot.js"
   },
+  "dependencies": {
+    "async": "^2.1.4",
+    "botkit": "^0.4.3",
+    "progress": "^1.1.8",
+    "request": "^2.79.0",
+    "sqlite3": "^3.1.8",
+    "wordfilter": "^0.2.6"
+  },
+  "devDependencies": {},
   "scripts": {
     "start": "node bin/bot.js"
   },
+  "homepage": "https://github.com/gonzalozunino/grandpabot",
   "keywords": [
     "Slack",
     "bot",
     "grandpa",
     "jokes"
   ],
-  "dependencies": {
-    "async": "^2.1.4",
-    "botkit": "^0.4.3",
-    "progress": "^1.1.8",
-    "request": "^2.79.0",
-    "sqlite3": "^3.1.8"
-  }
+  "author": "gonzalo.zunino@gmail.com",
+  "license": "MIT"
 }
