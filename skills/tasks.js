@@ -1,14 +1,14 @@
 var tasks = function(controller) {
-    controller.hears(['tasks', 'todo'],
+    controller.hears(['tasks', 'todo', 'tareas'],
         ['direct_mention', 'mention'],
         function(bot, message) {
             controller.storage.users.get(message.user, function(err, user) {
                 if (!user || !user.tasks || user.tasks.length == 0) {
-                    bot.reply(message, 'Ehhh... no tenes ninguna tarea que yo sepa... Para agregar una usa `agregar _tarea_`.');
+                    bot.reply(message, 'Ehhh... no tenés ninguna tarea que yo sepa... Para agregar una usa `agregar - y la tarea ...-`.');
                 } else {
                     var text = '**Glup** Estas son tus tareas o no?: \n' +
                         generateTaskList(user) +
-                        'Respondeme con `terminada _numero_` para que las marque como completas.';
+                        'Respondeme con `terminada - y número de la tarea ...-` para que las marque como completa.';
 
                     bot.reply(message, text);
                 }
@@ -49,7 +49,7 @@ var tasks = function(controller) {
             var number = message.match[1];
 
             if (isNaN(number)) {
-                bot.reply(message, 'Fijate bien, tiene que ser un número para cerrar la tarea.. :wink: .');
+                bot.reply(message, 'Fijate bien, tiene que ser un número para cerrar la tarea... :wink: .');
             } else {
                 number = parseInt(number) - 1;
 
@@ -61,7 +61,7 @@ var tasks = function(controller) {
                     }
 
                     if (number < 0 || number >= user.tasks.length) {
-                        bot.reply(message, 'Sorry, your input is out of range. Right now there are ' + user.tasks.length + ' items on your list.');
+                        bot.reply(message, 'No hay tareas con ese número, te fuiste de rango, tenés: ' + user.tasks.length + ' en tu lista :wink:.');
                     } else {
                         var item = user.tasks.splice(number,1);
 
