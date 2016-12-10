@@ -7,7 +7,6 @@ var J2S = require('jira2slack');
 // @ constants
 var TICKET_BUFFER_LENGTH = 300000;
 var RESPONSE_FULL = 'full';
-// @ objects
 var ticketBuffer = new Map();
 var config = {
     protocol: process.env.JIRA_PROTOCOL,
@@ -19,11 +18,16 @@ var config = {
     apiVersion: 'latest',
     strictSSL: false,
     regex: '([A-Z][A-Z0-9]+-[0-9]+)',
-    sprintField: process.env.JIRA_SPRINT_FIELD,
+    sprintField: '',
     customFields: {},
     response: RESPONSE_FULL,
     usermap: {}
 };
+var ticketRegExp = new RegExp(config.regex, 'g');
+/**
+ * Creates the jira API objext.
+ * @param {Object} - Config object.
+ */
 var jira = new JiraApi({
     protocol: config.protocol,
     host: config.host,
@@ -34,7 +38,6 @@ var jira = new JiraApi({
     strictSSL: config.strictSSL,
     base: config.base
 });
-var ticketRegExp = new RegExp(config.regex, 'g');
 
 var parseSprint = function parseSprint(customField) {
     var retVal = '';
@@ -201,27 +204,23 @@ var handleMessage = function handleMessage(bot, message) {
 
                     response.attachments = [issueResponse(issue, responseFormat)];
 
-                    bot.reply(message, response, function (err) {
-                        if (err) {
-                            console.error('Unable to respond', err);
-                        } else {
-                            console.info('@' + bot.identity.name + ' responded with', response);
-                        }
-                    });
+                    bot.reply(message, response);
                 }).catch(function (error) {
-                    console.error('Got an error trying to find ' + issueId, error);
+                    console.log('Got an error trying to find ' + issueId, error);
                 });
             });
+        } else {
+            bot.reply(message, 'No encontré nada');
         }
     } else {
-        console.info('@' + bot.identity.name + ' could not respond.');
+        console.log('@' + bot.identity.name + ' could not respond.');
     }
 };
 
 
 var listenJiraTickets = function(controller) {
-    controller.hears(['Jira Ticket'],
-        ['ambient', 'direct_message', 'direct_mention', 'mention'],
+    controller.hears(['Jira'],
+        ['ambient', 'direct_mention', 'mention'],
         function(bot, message) {
             handleMessage(bot, message, jira);
         });
