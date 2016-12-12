@@ -27,6 +27,19 @@ var _replyWithRandomJoke = function (replyWithRandomJokeCallback) {
     });
 };
 
+var _addJoke = function (newJoke) {
+    db.get('SELECT MAX(id) as id FROM jokes', function (err, record) {
+        if (err) {
+            console.error('ERROR:', err);
+            return console.error('DATABASE ERROR:', err);
+        }
+
+        var newId = record.id + 1;
+
+        return db.run('INSERT INTO jokes(id, joke, used) VALUES(?, ?, ?)', newId, newJoke, '1');
+    });
+};
+
 var jokes = function(controller) {
     controller.hears(['jajaja','Contate uno','Iluminame'],
         ['direct_mention', 'mention'],
@@ -36,6 +49,15 @@ var jokes = function(controller) {
             }
 
             _replyWithRandomJoke(replyWithRandomJokeCallback);
+        });
+
+    controller.hears(['Agregar Frase (.*)'],
+        ['direct_mention', 'mention'],
+        function(bot, message) {
+            var newJoke = message.match[1];
+
+            _addJoke(newJoke);
+            bot.reply(message, 'Ehhh OK, listo mergeado, digo... agregada!');
         });
 };
 

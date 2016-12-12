@@ -1,24 +1,24 @@
 var tasks = function(controller) {
-    controller.hears(['tasks', 'todo', 'tareas'],
+    controller.hears(['Tasks', 'Todo', 'Tareas'],
         ['direct_mention', 'mention'],
         function(bot, message) {
             controller.storage.users.get(message.user, function(err, user) {
                 if (!user || !user.tasks || user.tasks.length == 0) {
-                    bot.reply(message, 'Ehhh... no tenés ninguna tarea que yo sepa... Para agregar una usa `agregar - y la tarea ...-`.');
+                    bot.reply(message, 'Ehhh... no tenés ninguna tarea que yo sepa... Para agregar una usa `Agregar - y la tarea ...-`.');
                 } else {
                     var text = '**Glup** Estas son tus tareas o no?: \n' +
                         generateTaskList(user) +
-                        'Respondeme con `terminada - y número de la tarea ...-` para que las marque como completa.';
+                        'Respondeme con `Terminada - y número de la tarea ...-` para que las marque como completa.';
 
                     bot.reply(message, text);
                 }
             });
         });
 
-    controller.hears(['agregar (.*)'],
+    controller.hears(['Agregar (.*)'],
         ['direct_mention', 'mention'],
         function(bot, message) {
-            var newtask = message.match[1];
+            var newTask = message.match[1];
 
             controller.storage.users.get(message.user, function(err, user) {
                 if (!user) {
@@ -27,7 +27,7 @@ var tasks = function(controller) {
                     user.tasks = [];
                 }
 
-                user.tasks.push(newtask);
+                user.tasks.push(newTask);
 
                 controller.storage.users.save(user, function(err,saved) {
                     if (err) {
@@ -43,7 +43,7 @@ var tasks = function(controller) {
             });
         });
 
-    controller.hears(['terminada (.*)'],
+    controller.hears(['Terminada (.*)'],
         ['direct_mention', 'mention'],
         function(bot, message) {
             var number = message.match[1];
