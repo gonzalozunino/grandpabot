@@ -58,7 +58,7 @@ var greetings = function(controller) {
                 if (user && user.name) {
                     bot.reply(message, 'Ehhh Quien es ? Hola ' + user.name + '!!');
                 } else {
-                    bot.reply(message, 'Buenas buenas...');
+                    bot.reply(message, 'Buenas buenas, Hola, gente...');
                 }
             });
         });
