@@ -1,10 +1,20 @@
 var greetings = function(controller) {
     controller.hears(['kk', 'jovie', 'viejo'],
-        ['direct_mention', 'mention'],
+        ['ambient', 'direct_mention', 'mention'],
         function(bot, message) {
             var userID = message.user;
             var user = '<@'+userID+'>';
             var reply = user + ' qué pasó? Ahora no puedo, ando en calls.';
+
+            bot.reply(message, reply);
+        });
+
+    controller.hears(['Adios', 'Bye', 'Nos vemos', 'Chau'],
+        ['ambient', 'direct_mention', 'mention'],
+        function(bot, message) {
+            var userID = message.user;
+            var user = '<@'+userID+'>';
+            var reply = user + ' chau! Saludos.';
 
             bot.reply(message, reply);
         });

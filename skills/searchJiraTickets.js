@@ -8,21 +8,7 @@ var J2S = require('jira2slack');
 var TICKET_BUFFER_LENGTH = 300000;
 var RESPONSE_FULL = 'full';
 var ticketBuffer = new Map();
-var config = {
-    protocol: process.env.JIRA_PROTOCOL,
-    host: process.env.JIRA_HOST,
-    port: parseInt(process.env.JIRA_PORT, 10),
-    base: '',
-    user: process.env.JIRA_USER,
-    pass: process.env.JIRA_PASS,
-    apiVersion: 'latest',
-    strictSSL: false,
-    regex: '([A-Z][A-Z0-9]+-[0-9]+)',
-    sprintField: '',
-    customFields: {},
-    response: RESPONSE_FULL,
-    usermap: {}
-};
+var config = require('../config');
 var ticketRegExp = new RegExp(config.regex, 'g');
 /**
  * Creates the jira API objext.
