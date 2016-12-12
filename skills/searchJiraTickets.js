@@ -218,12 +218,12 @@ var handleMessage = function handleMessage(bot, message) {
 };
 
 
-var listenJiraTickets = function(controller) {
+var searchJiraTickets = function(controller) {
     controller.hears(['Jira'],
-        ['ambient', 'direct_mention', 'mention'],
+        ['direct_mention', 'mention'],
         function(bot, message) {
             handleMessage(bot, message, jira);
         });
 };
 
-module.exports = listenJiraTickets;
+module.exports = searchJiraTickets;
