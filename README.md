@@ -1,7 +1,7 @@
 # GrandpaBot
 A very simple Slack bot
 
-# Run
+## Run
 To run you need the lastest version of node.
 
 1. Clone repo
