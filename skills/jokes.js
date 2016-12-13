@@ -2,6 +2,7 @@
 var path = require('path');
 var fs = require('fs');
 var SQLite = require('sqlite3').verbose();
+var request = require('request');
 // @ constants
 var dbPath = path.resolve(__dirname, '..', 'data', 'grandpabot.db');
 
@@ -58,6 +59,25 @@ var jokes = function(controller) {
 
             _addJoke(newJoke);
             bot.reply(message, 'Ehhh OK, listo mergeado, digo... agregada!');
+        });
+
+    controller.hears(['Que embole'],
+        ['ambient'],
+        function(bot, message) {
+            request("http://api.giphy.com/v1/gifs/search?q=fail&api_key=dc6zaTOxFJmzC", function (error, response, body){
+                var data = JSON.parse(body);
+
+                var max = data.data.length;
+                var min = 0;
+
+                var randomNumber = Math.floor(Math.random() * (max - min)) + min;
+
+                gifUrl = data.data[randomNumber].images.downsized.url;
+
+                replyMessage = 'El mensaje es "verificar, y arreglar" - para quien esté sin tarea, pero toma un gif :wink:! \n' + gifUrl;
+
+                bot.reply(message, replyMessage);
+            });
         });
 };
 
