@@ -4,18 +4,18 @@ var tasks = function(controller) {
         function(bot, message) {
             controller.storage.users.get(message.user, function(err, user) {
                 if (!user || !user.tasks || user.tasks.length == 0) {
-                    bot.reply(message, 'Ehhh... no tenés ninguna tarea que yo sepa... Para agregar una usa `Agregar - y la tarea ...-`.');
+                    bot.reply(message, 'Ehhh... no tenés ninguna tarea que yo sepa... Para agregar una usa `Agregar Tarea -tarea-`.');
                 } else {
                     var text = '**Glup** Estas son tus tareas o no?: \n' +
                         generateTaskList(user) +
-                        'Respondeme con `Terminada - y número de la tarea ...-` para que las marque como completa.';
+                        'Respondeme con `Terminada Tarea -número de la tarea-` para que las marque como completa.';
 
                     bot.reply(message, text);
                 }
             });
         });
 
-    controller.hears(['Agregar (.*)'],
+    controller.hears(['Agregar Tarea (.*)'],
         ['direct_mention', 'mention'],
         function(bot, message) {
             var newTask = message.match[1];
@@ -43,7 +43,7 @@ var tasks = function(controller) {
             });
         });
 
-    controller.hears(['Terminada (.*)'],
+    controller.hears(['Terminada Tarea (.*)'],
         ['direct_mention', 'mention'],
         function(bot, message) {
             var number = message.match[1];
