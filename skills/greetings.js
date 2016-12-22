@@ -56,7 +56,7 @@ var greetings = function(controller) {
 
             controller.storage.users.get(message.user,function(err, user) {
                 if (user && user.name) {
-                    bot.reply(message, 'Ehhh Quien es ? Ahhh, Cómo le va!? ' + user.name + '!!');
+                    bot.reply(message, 'Ehhh Quien es ? Ahhh, ' + user.name + ' Cómo le va!?');
                 } else {
                     bot.reply(message, 'Buenas buenas, Hola, gente...');
                 }
